@@ -2,8 +2,6 @@ import { useState } from "react";
 import CustomButton from "../custom-button/custom-button.component";
 import FormInput from "../form-input/form-input.components";
 import { auth, signInWithGoogle } from '../../firebase/firebase.utils';
-
-
 import './sign-in.styles.scss'
 const SignIn = () => {
     const [userData, setuserData] = useState({ email: '', password: '' });
