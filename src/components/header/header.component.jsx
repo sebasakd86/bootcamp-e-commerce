@@ -1,8 +1,10 @@
 import './header.styles.scss'
-import {ReactComponent as Logo} from '../../assets/crown.svg'
+import { ReactComponent as Logo } from '../../assets/crown.svg'
 import { Link } from 'react-router-dom';
-const Header = () => {
-    return (  
+import { auth } from '../../firebase/firebase.utils'
+
+const Header = ({ currentUser }) => {
+    return (
         <div className="header">
             <Link to="/" className='logo-container'>
                 <Logo className="logo" />
@@ -10,10 +12,15 @@ const Header = () => {
             <div className="options">
                 <Link to="/shop" className="option">SHOP</Link>
                 <Link to="/shop" className="option">CONTACT</Link>
-                <Link to="/signin" className="option">SIGN IN</Link>
+                {
+                    currentUser 
+                    ? 
+                    <div className='option' onClick={() => auth.signOut()}>SIGN OUT</div>
+                    : <Link className='option' to='/signin'>SIGN IN</Link>
+                }                
             </div>
         </div>
     );
 }
- 
+
 export default Header;
