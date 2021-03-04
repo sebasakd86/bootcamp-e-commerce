@@ -3,18 +3,22 @@ import CustomButton from "../custom-button/custom-button.component";
 import FormInput from "../form-input/form-input.components";
 import { auth, signInWithGoogle } from '../../firebase/firebase.utils';
 import './sign-in.styles.scss'
+import { useDispatch } from 'react-redux'
+import { setCurrentUser } from '../../redux/user/userDucks'
 const SignIn = () => {
+    const dispatch = useDispatch();
     const [userData, setuserData] = useState({ email: '', password: '' });
     const handleSubmit = async (e) => {
         e.preventDefault();
         const { email, password} = userData;
-        console.log(email, password);
+        console.log('Login!', email, password);
         try {
             await auth.signInWithEmailAndPassword(email, password)
-            setuserData({ email: '', password: '' })
+            // console.log('Return from login --->',aux);
+            dispatch(setCurrentUser({ email: '', password: '' }));
         }
         catch(err){
-            console.log('Log In Error ->', err.message);
+            // console.log('Log In Error ->', err.message);
         }
     }
     const handleChange = (e) => {
