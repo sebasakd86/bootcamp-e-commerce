@@ -1,18 +1,20 @@
 import HomePage from "./pages/homepage/home.component";
 import './App.css'
 
-import { Route, Switch } from 'react-router-dom';
+import { Route, Switch, Redirect } from 'react-router-dom';
 import ShopPage from "./pages/shoppage/shop.component";
 import Header from "./components/header/header.component";
 import SignInAndSignUpPage from "./pages/sign-in-out/sign-in-out.component";
 import { auth, createUserProfileDocument } from './firebase/firebase.utils'
 import { useRef, useEffect } from "react";
-import { useDispatch } from 'react-redux'
+import { useDispatch, useSelector } from 'react-redux'
 import { setCurrentUser } from './redux/user/userDucks';
 
 
 function App() {
   const dispatch = useDispatch();
+  const {currentUser} = useSelector(store => store.user);
+  console.log(currentUser);
   let unsubscribeOnUnmount = useRef(null);
   useEffect(() => {
     unsubscribeOnUnmount.current = auth.onAuthStateChanged(async user => {
@@ -37,7 +39,7 @@ function App() {
       <Switch>
         <Route exact path='/' component={HomePage} />
         <Route path='/shop' component={ShopPage} />
-        <Route path='/signin' component={SignInAndSignUpPage} />
+        <Route exact path='/signin' render={() => (currentUser) ? <Redirect to='/' /> :  <SignInAndSignUpPage />} />
       </Switch>
     </div>
   );
