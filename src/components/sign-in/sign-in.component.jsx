@@ -4,7 +4,7 @@ import FormInput from "../form-input/form-input.components";
 import { auth, signInWithGoogle } from '../../firebase/firebase.utils';
 import './sign-in.styles.scss'
 import { useDispatch } from 'react-redux'
-import { setCurrentUser } from '../../redux/user/userDucks'
+import { setCurrentUser } from '../../redux/ducks/userDucks'
 const SignIn = () => {
     const dispatch = useDispatch();
     const [userData, setuserData] = useState({ email: '', password: '' });

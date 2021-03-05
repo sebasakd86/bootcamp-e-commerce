@@ -8,7 +8,7 @@ import SignInAndSignUpPage from "./pages/sign-in-out/sign-in-out.component";
 import { auth, createUserProfileDocument } from './firebase/firebase.utils'
 import { useRef, useEffect } from "react";
 import { useDispatch, useSelector } from 'react-redux'
-import { setCurrentUser } from './redux/user/userDucks';
+import { setCurrentUser } from './redux/ducks/userDucks';
 
 
 function App() {

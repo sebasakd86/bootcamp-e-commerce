@@ -3,14 +3,17 @@ import { ReactComponent as Logo } from '../../assets/crown.svg'
 import { Link } from 'react-router-dom';
 import { auth } from '../../firebase/firebase.utils'
 import { useDispatch, useSelector } from 'react-redux'
-import { setCurrentUser } from '../../redux/user/userDucks';
+import { setCurrentUser } from '../../redux/ducks/userDucks';
+import CartIcon from '../cart-icon/cart-icon.component';
+import CartDropDown from '../cart-dropdown/cart-dropdown.component'
 
 const Header = () => {
     const dispatch = useDispatch();
-    const {currentUser} = useSelector(store => store.user)
+    const { currentUser } = useSelector(store => store.user)
+    const { hidden } = useSelector(store => store.cart);
     // console.log('Header', currentUser);
     const handleSignOut = async () => {
-        await auth.signOut();        
+        await auth.signOut();
         dispatch((setCurrentUser()));
     }
     return (
@@ -23,11 +26,15 @@ const Header = () => {
                 <Link to="/shop" className="option">CONTACT</Link>
                 {
                     currentUser
-                    ? 
-                    <div className='option' onClick={handleSignOut}>SIGN OUT</div>
-                    : <Link className='option' to='/signin'>SIGN IN</Link>
+                        ?
+                        <div className='option' onClick={handleSignOut}>SIGN OUT</div>
+                        : <Link className='option' to='/signin'>SIGN IN</Link>
                 }                
+                <CartIcon />
             </div>
+            {
+                !hidden ? <CartDropDown /> : null
+            }            
         </div>
     );
 }
