@@ -14,7 +14,7 @@ import { setCurrentUser } from './redux/ducks/userDucks';
 function App() {
   const dispatch = useDispatch();
   const {currentUser} = useSelector(store => store.user);
-  console.log(currentUser);
+  // console.log(currentUser);
   let unsubscribeOnUnmount = useRef(null);
   useEffect(() => {
     unsubscribeOnUnmount.current = auth.onAuthStateChanged(async user => {
