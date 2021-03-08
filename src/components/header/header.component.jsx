@@ -3,14 +3,15 @@ import { ReactComponent as Logo } from '../../assets/crown.svg'
 import { Link } from 'react-router-dom';
 import { auth } from '../../firebase/firebase.utils'
 import { useDispatch, useSelector } from 'react-redux'
-import { setCurrentUser } from '../../redux/ducks/userDucks';
+import { setCurrentUser, selectCurrentUser } from '../../redux/ducks/userDucks';
+import { selectCartHidden } from '../../redux/ducks/cartDucks';
 import CartIcon from '../cart-icon/cart-icon.component';
-import CartDropDown from '../cart-dropdown/cart-dropdown.component'
+import CartDropDown from '../cart-dropdown/cart-dropdown.component';
 
 const Header = () => {
     const dispatch = useDispatch();
-    const { currentUser } = useSelector(store => store.user)
-    const { hidden } = useSelector(store => store.cart);
+    const currentUser = useSelector(selectCurrentUser)
+    const hidden = useSelector(selectCartHidden);
     // console.log('Header', currentUser);
     const handleSignOut = async () => {
         await auth.signOut();

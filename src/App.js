@@ -8,12 +8,12 @@ import SignInAndSignUpPage from "./pages/sign-in-out/sign-in-out.component";
 import { auth, createUserProfileDocument } from './firebase/firebase.utils'
 import { useRef, useEffect } from "react";
 import { useDispatch, useSelector } from 'react-redux'
-import { setCurrentUser } from './redux/ducks/userDucks';
+import { setCurrentUser, selectCurrentUser } from './redux/ducks/userDucks';
 
 
 function App() {
   const dispatch = useDispatch();
-  const {currentUser} = useSelector(store => store.user);
+  const currentUser = useSelector(selectCurrentUser);
   // console.log(currentUser);
   let unsubscribeOnUnmount = useRef(null);
   useEffect(() => {
