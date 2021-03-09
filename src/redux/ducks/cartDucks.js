@@ -1,17 +1,22 @@
 import { addItemToCart, removeItemFromCart } from "../utils";
 import { createSelector } from "reselect";
-// constantes
+/* -----------------------------
+            constants
+ -----------------------------*/
 const INITIAL_STATE = {
     hidden: true,
     cartItems: [],
 };
-// types
+/* -----------------------------
+            types
+----------------------------- */
 const TOGGLE_CART_HIDDEN = "TOGGLE_CART_HIDDEN";
 const ADD_ITEM = "ADD_ITEM";
 const CLEAR_ITEM_FROM_CART = "CLEAR_ITEM_FROM_CART";
 const REMOVE_ITEM = "REMOVE_ITEM";
-
-// reducer
+/* -----------------------------
+            reducer
+-----------------------------*/
 export default function cartReducer(state = INITIAL_STATE, action) {
     switch (action.type) {
         case TOGGLE_CART_HIDDEN:
@@ -35,13 +40,15 @@ export default function cartReducer(state = INITIAL_STATE, action) {
         case REMOVE_ITEM:
             return {
                 ...state,
-                cartItems: removeItemFromCart(state.cartItems, action.payload)
+                cartItems: removeItemFromCart(state.cartItems, action.payload),
             };
         default:
             return state;
     }
 }
-// actions
+/* -----------------------------
+            actions
+----------------------------- */
 export const toggleCartHidden = () => async (dispatch, getState) => {
     dispatch({
         type: TOGGLE_CART_HIDDEN,
@@ -67,7 +74,9 @@ export const removeCartItem = (item) => async (dispatch, getState) => {
         payload: item,
     });
 };
-//selectors
+/* -----------------------------
+            selectors
+-----------------------------*/
 const selectCart = (state) => state.cart;
 
 export const selectCartItems = createSelector(
