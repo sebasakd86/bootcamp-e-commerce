@@ -1,4 +1,4 @@
-import { addItemToCart } from "../utils";
+import { addItemToCart, removeItemFromCart } from "../utils";
 import { createSelector } from "reselect";
 // constantes
 const INITIAL_STATE = {
@@ -8,6 +8,8 @@ const INITIAL_STATE = {
 // types
 const TOGGLE_CART_HIDDEN = "TOGGLE_CART_HIDDEN";
 const ADD_ITEM = "ADD_ITEM";
+const CLEAR_ITEM_FROM_CART = "CLEAR_ITEM_FROM_CART";
+const REMOVE_ITEM = "REMOVE_ITEM";
 
 // reducer
 export default function cartReducer(state = INITIAL_STATE, action) {
@@ -23,6 +25,18 @@ export default function cartReducer(state = INITIAL_STATE, action) {
                 cartItems: addItemToCart(state.cartItems, action.payload),
             };
         //Every reducer get every fired action, so this is mandatory
+        case CLEAR_ITEM_FROM_CART:
+            return {
+                ...state,
+                cartItems: state.cartItems.filter(
+                    (ci) => ci.id !== action.payload.id
+                ),
+            };
+        case REMOVE_ITEM:
+            return {
+                ...state,
+                cartItems: removeItemFromCart(state.cartItems, action.payload)
+            };
         default:
             return state;
     }
@@ -41,7 +55,18 @@ export const addCartItem = (item) => async (dispatch, getState) => {
         payload: item,
     });
 };
-
+export const clearItemFromCart = (item) => async (dispatch, getState) => {
+    dispatch({
+        type: CLEAR_ITEM_FROM_CART,
+        payload: item,
+    });
+};
+export const removeCartItem = (item) => async (dispatch, getState) => {
+    dispatch({
+        type: REMOVE_ITEM,
+        payload: item,
+    });
+};
 //selectors
 const selectCart = (state) => state.cart;
 
@@ -57,5 +82,11 @@ export const selectCartItemsCount = createSelector(
 );
 export const selectCartHidden = createSelector(
     [selectCart],
-    cart => cart.hidden
-)
+    (cart) => cart.hidden
+);
+export const selectCartTotal = createSelector([selectCartItems], (cartItems) =>
+    cartItems.reduce(
+        (acum, cartItem) => acum + cartItem.quantity * cartItem.price,
+        0
+    )
+);
