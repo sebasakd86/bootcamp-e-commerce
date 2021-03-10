@@ -6,6 +6,7 @@ import cartReducer from "./ducks/cartDucks";
 
 import { persistStore, persistReducer } from "redux-persist"; //to cache our store value
 import storage from 'redux-persist/lib/storage' //use local storage as default
+import directoryReducer from "./ducks/directoryDucks";
 // import sessionStorage from 'redux-persist/lib/storage' //its somewhere else
 
 const persistConfig = {
@@ -20,6 +21,7 @@ const persistConfig = {
 const rootReducer = combineReducers({
     user: userReducer,
     cart: cartReducer,
+    directory: directoryReducer
 });
 // create a persisted reducer
 const persistedReducer = persistReducer(persistConfig, rootReducer);
