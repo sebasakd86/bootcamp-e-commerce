@@ -6,13 +6,6 @@ import SHOP_DATA from "./shop.data";
 const INITIAL_STATE = {
     collections: SHOP_DATA,
 };
-const COLLECTION_ID_MAP = {
-    hats: 1,
-    sneakers: 2,
-    jackets: 3,
-    womens: 4,
-    mens: 5,
-};
 /* -------------------------
             types
 ------------------------- */
@@ -39,8 +32,11 @@ export const selectCollections = createSelector(
     [selectShop],
     (shop) => shop.collections
 );
-
+export const selectCollectionsForPreview = createSelector(
+    [selectCollections],
+    collections => Object.keys(collections).map(k => collections[k])
+)
 export const selectCollection = collectionUrlParam => createSelector(
     [selectCollections],
-    collections => collections.find(c => c.id === COLLECTION_ID_MAP[collectionUrlParam])
+    collections => collections[collectionUrlParam]
 )
