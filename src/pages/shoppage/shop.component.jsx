@@ -1,10 +1,11 @@
-import { useState } from 'react';
 import CollectionPreview from '../../components/collection-preview/collection-preview.component';
-import SHOP_DATA from './shop.data';
 import './shop.styles.scss'
+import { useSelector } from 'react-redux'
+import { selectCollections } from '../../redux/ducks/shopDucks'
 
 const ShopPage = () => {
-    const [collections, setcollections] = useState(SHOP_DATA);
+    const collections = useSelector(selectCollections);
+    console.log(collections);
     return (
         <div className="shop-page">
             {
