@@ -32,7 +32,12 @@ const persistedReducer = persistReducer(persistConfig, rootReducer);
 const composeEnhancers =
     window.__REDUX_DEVTOOLS_EXTENSIONS_COMPOSE__ || compose;
 
-const middlewares = [thunk, logger];
+const middlewares = [];
+
+if (process.env.NODE_ENV === 'development'){
+    middlewares.push(logger);
+    middlewares.push(thunk);
+}
 
 const store = createStore(
     //rootReducer,
