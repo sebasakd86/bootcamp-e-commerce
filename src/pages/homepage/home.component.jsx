@@ -1,12 +1,12 @@
-import './home.styles.scss'
-import Directory from '../../components/directory/directory.component';
-
+// import "./home.styles.scss";
+import Directory from "../../components/directory/directory.component";
+import HomePageContainer from "./homepage.styles";
 const HomePage = () => {
     return (
-        <div className="homePage">
+        <HomePageContainer>
             <Directory />
-        </div>
+        </HomePageContainer>
     );
-}
+};
 
 export default HomePage;
