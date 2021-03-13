@@ -6,19 +6,25 @@ import {
 } from "../../redux/ducks/cartDucks";
 import { useDispatch, useSelector } from "react-redux";
 
-import "./cart-icon.styles.scss";
+import {
+    CartIconContainer,
+    ItemCount,
+    ShoppingIconContainer,
+} from "./cart-icon.styles";
 const CartIcon = () => {
     const dispatch = useDispatch();
     const items = useSelector(selectCartItemsCount);
-    
+
     const handleCartClick = (e) => {
         dispatch(toggleCartHidden());
     };
     return (
-        <div className='cart-icon' onClick={handleCartClick}>
-            <ShoppingIcon className='shopping-icon' />
-            <span className='item-count'>{items}</span>
-        </div>
+        <CartIconContainer onClick={handleCartClick}>
+            <ShoppingIconContainer>
+                <ShoppingIcon />
+            </ShoppingIconContainer>
+            <ItemCount>{items}</ItemCount>
+        </CartIconContainer>
     );
 };
 export default CartIcon;

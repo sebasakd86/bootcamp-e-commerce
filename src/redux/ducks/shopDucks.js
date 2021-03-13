@@ -28,6 +28,7 @@ export default function shopReducer(state = INITIAL_STATE, action) {
             actions
 ------------------------- */
 export const updateCollections = (collectionsMap) => (dispatch, getState) => {
+    // console.log("getting items!");
     dispatch({
         type: UPDATE_COLLECTIONS,
         payload: collectionsMap,
