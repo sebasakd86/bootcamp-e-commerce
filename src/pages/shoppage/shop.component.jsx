@@ -7,15 +7,23 @@ import {
     firestore,
     convertCollectionsSnapshotToMap,
 } from "../../firebase/firebase.utils";
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import { updateCollections } from "../../redux/ducks/shopDucks";
+
+import WithSpinner from "../../components/with-spinner/with-spinner.component";
+
+const CollectionsOverviewWithSpinner = WithSpinner(CollectionsOverview);
+const CollectionPageWithSpinner = WithSpinner(CollectionPage);
+
 const ShopPage = ({ match }) => {
+    const [loading, setloading] = useState(true);
     const dispatch = useDispatch();
     useEffect(() => {
         const collectionRef = firestore.collection("collections");
         collectionRef.onSnapshot(async (snapshot) => {
             const collections = convertCollectionsSnapshotToMap(snapshot);
             dispatch(updateCollections(collections));
+            setloading(false);
         });
     }, []);
     return (
@@ -23,11 +31,15 @@ const ShopPage = ({ match }) => {
             <Route
                 exact
                 path={`${match.path}`}
-                component={CollectionsOverview}
+                render={() => (
+                    <CollectionsOverviewWithSpinner isLoading={loading} />
+                )}
             />
             <Route
                 path={`${match.path}/:collectionId`}
-                component={CollectionPage}
+                component={(match) => (
+                    <CollectionPageWithSpinner isLoading={loading} {...match} />
+                )}
             />
         </div>
     );

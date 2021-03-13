@@ -1,10 +1,9 @@
 import { createSelector } from "reselect";
-import SHOP_DATA from "./shop.data";
 /* -------------------------
         constantes
 ------------------------- */
 const INITIAL_STATE = {
-    collections: SHOP_DATA,
+    collections: null,
 };
 /* -------------------------
             types
@@ -45,10 +44,10 @@ export const selectCollections = createSelector(
 );
 export const selectCollectionsForPreview = createSelector(
     [selectCollections],
-    (collections) => Object.keys(collections).map((k) => collections[k])
+    (collections) =>
+        collections ? Object.keys(collections).map((k) => collections[k]) : []
 );
 export const selectCollection = (collectionUrlParam) =>
-    createSelector(
-        [selectCollections],
-        (collections) => collections[collectionUrlParam]
+    createSelector([selectCollections], (collections) =>
+        collections ? collections[collectionUrlParam] : null
     );
