@@ -20,7 +20,7 @@ const ShopPage = ({ match }) => {
     const dispatch = useDispatch();
     useEffect(() => {
         const collectionRef = firestore.collection("collections");
-        collectionRef.onSnapshot(async (snapshot) => {
+        collectionRef.get().then(async (snapshot) => {
             const collections = convertCollectionsSnapshotToMap(snapshot);
             dispatch(updateCollections(collections));
             setloading(false);
