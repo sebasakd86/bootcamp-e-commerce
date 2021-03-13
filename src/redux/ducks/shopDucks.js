@@ -9,12 +9,17 @@ const INITIAL_STATE = {
 /* -------------------------
             types
 ------------------------- */
-
+const UPDATE_COLLECTIONS = "UPDATE_COLLECTIONS";
 /* -------------------------
             reducer
 ------------------------- */
 export default function shopReducer(state = INITIAL_STATE, action) {
     switch (action.type) {
+        case UPDATE_COLLECTIONS:
+            return {
+                ...state,
+                collections: action.payload,
+            };
         default:
             return state;
     }
@@ -22,7 +27,12 @@ export default function shopReducer(state = INITIAL_STATE, action) {
 /* -------------------------
             actions
 ------------------------- */
-
+export const updateCollections = (collectionsMap) => (dispatch, getState) => {
+    dispatch({
+        type: UPDATE_COLLECTIONS,
+        payload: collectionsMap,
+    });
+};
 /* -------------------------
             selectors
 ------------------------- */
@@ -34,9 +44,10 @@ export const selectCollections = createSelector(
 );
 export const selectCollectionsForPreview = createSelector(
     [selectCollections],
-    collections => Object.keys(collections).map(k => collections[k])
-)
-export const selectCollection = collectionUrlParam => createSelector(
-    [selectCollections],
-    collections => collections[collectionUrlParam]
-)
+    (collections) => Object.keys(collections).map((k) => collections[k])
+);
+export const selectCollection = (collectionUrlParam) =>
+    createSelector(
+        [selectCollections],
+        (collections) => collections[collectionUrlParam]
+    );
