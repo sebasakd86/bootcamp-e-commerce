@@ -1,45 +1,27 @@
-import CollectionsOverview from "../../components/collections-overview/collections-overview.component";
 import "./shop.styles.scss";
 import { Route } from "react-router-dom";
-import CollectionPage from "../collectionpage/collection-page.component";
 import { useDispatch } from "react-redux";
-import {
-    firestore,
-    convertCollectionsSnapshotToMap,
-} from "../../firebase/firebase.utils";
-import { useEffect, useState } from "react";
-import { updateCollections } from "../../redux/ducks/shopDucks";
-
-import WithSpinner from "../../components/with-spinner/with-spinner.component";
-
-const CollectionsOverviewWithSpinner = WithSpinner(CollectionsOverview);
-const CollectionPageWithSpinner = WithSpinner(CollectionPage);
+import { useEffect } from "react";
+import { fetchCollectionsStartAsync } from "../../redux/ducks/shopDucks";
+import CollectionsOverviewContainer from "../../components/collections-overview/collections-overview.container";
+import CollectionPageContainer from "../collectionpage/collection-page.container";
 
 const ShopPage = ({ match }) => {
-    const [loading, setloading] = useState(true);
     const dispatch = useDispatch();
+
     useEffect(() => {
-        const collectionRef = firestore.collection("collections");
-        collectionRef.get().then(async (snapshot) => {
-            const collections = convertCollectionsSnapshotToMap(snapshot);
-            dispatch(updateCollections(collections));
-            setloading(false);
-        });
+        dispatch(fetchCollectionsStartAsync());
     }, []);
     return (
         <div className='shop-page'>
             <Route
                 exact
                 path={`${match.path}`}
-                render={() => (
-                    <CollectionsOverviewWithSpinner isLoading={loading} />
-                )}
+                component={CollectionsOverviewContainer}
             />
             <Route
                 path={`${match.path}/:collectionId`}
-                component={(match) => (
-                    <CollectionPageWithSpinner isLoading={loading} {...match} />
-                )}
+                component={CollectionPageContainer}
             />
         </div>
     );
