@@ -1,6 +1,19 @@
-import "./checkout-item.styles.scss";
 import { useDispatch } from "react-redux";
-import { clearItemFromCart, addCartItem, removeCartItem } from "../../redux/ducks/cartDucks";
+import {
+    clearItemFromCart,
+    addCartItem,
+    removeCartItem,
+} from "../../redux/ducks/cartDucks";
+import {
+    CheckoutItemContainer,
+    CheckoutItemImageContainer,
+    CheckoutItemSpanNombre,
+    CheckoutItemSpanQuantity,
+    CheckoutItemArrow,
+    CheckoutItemSpanValue,
+    CheckoutItemSpanPrice,
+    CheckoutItemRemove,
+} from "./checkout-item.styles";
 
 const CheckoutItem = ({ cartItem }) => {
     const { name, imageUrl, price, quantity } = cartItem;
@@ -10,26 +23,30 @@ const CheckoutItem = ({ cartItem }) => {
     };
     const handleDecreaseQuantity = () => {
         dispatch(removeCartItem(cartItem));
-    }
+    };
     const handleIncreaseQuantity = () => {
         dispatch(addCartItem(cartItem));
-    }
+    };
     return (
-        <div className='checkout-item'>
-            <div className='image-container'>
+        <CheckoutItemContainer>
+            <CheckoutItemImageContainer>
                 <img src={imageUrl} alt='item' />
-            </div>
-            <span className='name'>{name}</span>
-            <span className='quantity'>
-                <div className='arrow' onClick={handleDecreaseQuantity}>&#10094;</div>
-                <span className="value">{quantity}</span>
-                <div className='arrow' onClick={handleIncreaseQuantity}>&#10095;</div>
-            </span>
-            <span className='price'>{price}</span>
-            <div className='remove-button' onClick={handleRemoveClick}>
+            </CheckoutItemImageContainer>
+            <CheckoutItemSpanNombre>{name}</CheckoutItemSpanNombre>
+            <CheckoutItemSpanQuantity>
+                <CheckoutItemArrow onClick={handleDecreaseQuantity}>
+                    &#10094;
+                </CheckoutItemArrow>
+                <CheckoutItemSpanValue>{quantity}</CheckoutItemSpanValue>
+                <CheckoutItemArrow onClick={handleIncreaseQuantity}>
+                    &#10095;
+                </CheckoutItemArrow>
+            </CheckoutItemSpanQuantity>
+            <CheckoutItemSpanPrice>{price}</CheckoutItemSpanPrice>
+            <CheckoutItemRemove onClick={handleRemoveClick}>
                 &#10005;
-            </div>
-        </div>
+            </CheckoutItemRemove>
+        </CheckoutItemContainer>
     );
 };
 
