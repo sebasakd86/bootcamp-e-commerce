@@ -1,22 +1,26 @@
 import "./collection-page.styles.scss";
-import { useSelector } from "react-redux";
-import { selectCollection } from "../../redux/ducks/shopDucks";
 import CollectionItem from "../../components/collection-item/collection-item.component";
 
+import CollectionsContext from "../../context/collections/collections.context";
+
 const CollectionPage = ({ match }) => {
-    const { title, items } = useSelector(
-        selectCollection(match.params.collectionId)
-    );
-    console.log(title, items);
     return (
-        <div className='collection-page'>
-            <h2 className='title'>{title}</h2>
-            <div className="items">
-                {
-                    items.map(item => <CollectionItem key={item.id} item={item} />)
-                }
-            </div>
-        </div>
+        <CollectionsContext.Consumer>
+            {(collections) => {
+                const collection = collections[match.params.collectionId];
+                const { title, items } = collection;
+                return (
+                    <div className='collection-page'>
+                        <h2 className='title'>{title}</h2>
+                        <div className='items'>
+                            {items.map((item) => (
+                                <CollectionItem key={item.id} item={item} />
+                            ))}
+                        </div>
+                    </div>
+                );
+            }}
+        </CollectionsContext.Consumer>
     );
 };
 
