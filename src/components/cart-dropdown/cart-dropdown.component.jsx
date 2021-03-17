@@ -1,7 +1,5 @@
-import { useDispatch, useSelector } from "react-redux";
 import CartItem from "../cart-item/cart-item.component";
 import CustomButton from "../custom-button/custom-button.component";
-import { selectCartItems, toggleCartHidden } from "../../redux/ducks/cartDucks";
 import { withRouter } from "react-router-dom";
 import {
     CartDropDownContainer,
@@ -9,11 +7,14 @@ import {
     EmptyMessage,
 } from "./cart-dropdown.styles";
 
+import { useContext } from "react";
+
+import { CartContext } from "../../providers/cart/cart.provider";
+
 const CartDropDown = ({ history }) => {
-    const dispatch = useDispatch();
-    const cartItems = useSelector(selectCartItems);
+    const { cartItems, toggleHidden } = useContext(CartContext);
     const handleClick = () => {
-        dispatch(toggleCartHidden());
+        toggleHidden();
         history.push("/checkout");
     };
     return (

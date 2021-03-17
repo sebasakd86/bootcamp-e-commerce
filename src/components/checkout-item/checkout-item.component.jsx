@@ -1,19 +1,19 @@
 import "./checkout-item.styles.scss";
-import { useDispatch } from "react-redux";
-import { clearItemFromCart, addCartItem, removeCartItem } from "../../redux/ducks/cartDucks";
+import { CartContext } from "../../providers/cart/cart.provider";
+import { useContext } from "react";
 
 const CheckoutItem = ({ cartItem }) => {
     const { name, imageUrl, price, quantity } = cartItem;
-    const dispatch = useDispatch();
+    const { removeItem, addItem, clearItemFromCart } = useContext(CartContext);
     const handleRemoveClick = () => {
-        dispatch(clearItemFromCart(cartItem));
+        clearItemFromCart(cartItem);
     };
     const handleDecreaseQuantity = () => {
-        dispatch(removeCartItem(cartItem));
-    }
+        removeItem(cartItem);
+    };
     const handleIncreaseQuantity = () => {
-        dispatch(addCartItem(cartItem));
-    }
+        addItem(cartItem);
+    };
     return (
         <div className='checkout-item'>
             <div className='image-container'>
@@ -21,9 +21,13 @@ const CheckoutItem = ({ cartItem }) => {
             </div>
             <span className='name'>{name}</span>
             <span className='quantity'>
-                <div className='arrow' onClick={handleDecreaseQuantity}>&#10094;</div>
-                <span className="value">{quantity}</span>
-                <div className='arrow' onClick={handleIncreaseQuantity}>&#10095;</div>
+                <div className='arrow' onClick={handleDecreaseQuantity}>
+                    &#10094;
+                </div>
+                <span className='value'>{quantity}</span>
+                <div className='arrow' onClick={handleIncreaseQuantity}>
+                    &#10095;
+                </div>
             </span>
             <span className='price'>{price}</span>
             <div className='remove-button' onClick={handleRemoveClick}>
