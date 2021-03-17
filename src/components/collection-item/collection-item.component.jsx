@@ -1,28 +1,37 @@
-import './collection-item.styles.scss'
+import { useDispatch } from "react-redux";
+import { addCartItem } from "../../redux/ducks/cartDucks";
 
-import { useDispatch } from 'react-redux'
-import { addCartItem } from '../../redux/ducks/cartDucks'
-
-import CustomButton from '../custom-button/custom-button.component'
+import CustomButton from "../custom-button/custom-button.component";
+import {
+    CollectionItemContainer,
+    CollectionItemImage,
+    CollectionItemFooter,
+    CollectionItemNameSpan,
+    CollectionItemPriceSpan,
+    CollectionItemButton,
+} from "./collection-item.styles";
 
 const CollectionItem = ({ item }) => {
-    const { name, price, imageUrl } = item
+    const { name, price, imageUrl } = item;
     const dispatch = useDispatch();
-    const handleClick = e => {
+    const handleClick = (e) => {
         dispatch(addCartItem(item));
-    }
+    };
     return (
-        <div className="collection-item">
-            <div className="image"
-                style={{ backgroundImage: `url(${imageUrl})` }}
-            ></div>
-            <div className="collection-footer">
-                <span className="name">{name}</span>
-                <span className="price">{price}</span>
-            </div>
-            <CustomButton inverted onClick={handleClick}>Add to cart</CustomButton>
-        </div>
+        <CollectionItemContainer>
+            <CollectionItemImage
+                style={{
+                    backgroundImage: `url(${imageUrl})`,
+                }}></CollectionItemImage>
+            <CollectionItemFooter>
+                <CollectionItemNameSpan>{name}</CollectionItemNameSpan>
+                <CollectionItemPriceSpan>{price}</CollectionItemPriceSpan>
+            </CollectionItemFooter>
+            <CollectionItemButton inverted onClick={handleClick}>
+                Add to cart
+            </CollectionItemButton>
+        </CollectionItemContainer>
     );
-}
+};
 
 export default CollectionItem;
