@@ -29,3 +29,10 @@ export const filterItemFromCart = (cartItems, item) => {
 export const getCartItemsCount = (cartItems) => {
     return cartItems.reduce((acc, cartItem) => acc + cartItem.quantity, 0);
 };
+
+export const getCartTotal = (cartItems) => {
+    return cartItems.reduce(
+        (total, item) => (total += item.price * item.quantity),
+        0
+    );
+};
