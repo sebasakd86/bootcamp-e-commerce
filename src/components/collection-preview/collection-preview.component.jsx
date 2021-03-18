@@ -1,19 +1,25 @@
-import CollectionItem from '../collection-item/collection-item.component';
-import './collection-preview.sytles.scss'
+import CollectionItem from "../collection-item/collection-item.component";
+import {
+    CollectionPreviewContainer,
+    CollectionPreviewTitle,
+    CollectionPreviewItems,
+} from "./collection-preview.styles";
 
-const CollectionPreview = ({title, items}) => {
-    return (  
-        <div className="collection-preview">
-            <h1 className="title">{title.toUpperCase()}</h1>
-            <div className="preview">
-                {
-                    items
+const CollectionPreview = ({ title, items }) => {
+    return (
+        <CollectionPreviewContainer>
+            <CollectionPreviewTitle>
+                {title.toUpperCase()}
+            </CollectionPreviewTitle>
+            <CollectionPreviewItems>
+                {items
                     .filter((item, idx) => idx < 4)
-                    .map(item => <CollectionItem key={item.id} item={item} />)
-                }
-            </div>
-        </div>
+                    .map((item) => (
+                        <CollectionItem key={item.id} item={item} />
+                    ))}
+            </CollectionPreviewItems>
+        </CollectionPreviewContainer>
     );
-}
- 
+};
+
 export default CollectionPreview;
