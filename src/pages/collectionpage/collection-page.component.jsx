@@ -1,11 +1,12 @@
 import "./collection-page.styles.scss";
 import CollectionItem from "../../components/collection-item/collection-item.component";
 import { useContext } from "react";
-import CollectionsContext from "../../context/collections/collections.context";
+import { CollectionContext } from "../../providers/collection/collection.provider";
 
 const CollectionPage = ({ match }) => {
-    const collections = useContext(CollectionsContext);
-    const { title, items } = collections[match.params.collectionId];
+    const { getCollection } = useContext(CollectionContext);
+    // console.log(collections);
+    const { title, items } = getCollection(match.params.collectionId);
     return (
         <div className='collection-page'>
             <h2 className='title'>{title}</h2>

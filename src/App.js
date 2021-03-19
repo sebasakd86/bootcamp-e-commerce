@@ -11,6 +11,7 @@ import { auth, createUserProfileDocument } from "./firebase/firebase.utils";
 import { useRef, useEffect, useState } from "react";
 
 import CurrentUserContext from "./context/currentUser/current-user.context";
+import { CollectionProvider } from "./providers/collection/collection.provider";
 
 function App() {
     const [currentUser, setCurrentUser] = useState({});
@@ -37,7 +38,9 @@ function App() {
             </CurrentUserContext.Provider>
             <Switch>
                 <Route exact path='/' component={HomePage} />
-                <Route path='/shop' component={ShopPage} />
+                <CollectionProvider>
+                    <Route path='/shop' component={ShopPage} />
+                </CollectionProvider>
                 <Route exact path='/checkout' component={CheckoutPage} />
                 <Route
                     exact
