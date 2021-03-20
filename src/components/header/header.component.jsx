@@ -1,8 +1,6 @@
 // import './header.styles.scss'
 import { ReactComponent as Logo } from "../../assets/crown.svg";
 import { auth } from "../../firebase/firebase.utils";
-import { useDispatch } from "react-redux";
-import { setCurrentUser } from "../../redux/ducks/userDucks";
 import CartIcon from "../cart-icon/cart-icon.component";
 import CartDropDown from "../cart-dropdown/cart-dropdown.component";
 import { useContext } from "react";
@@ -13,17 +11,19 @@ import {
     OptionLink,
     OptionsContainer,
 } from "./header.styles";
-import CurrentUserContext from "../../context/currentUser/current-user.context";
+
 import { CartContext } from "../../providers/cart/cart.provider";
+import { CurrentUserContext } from "../../providers/user/user.provider";
 
 const Header = () => {
-    const dispatch = useDispatch();
-    const currentUser = useContext(CurrentUserContext);
+    // const x = useContext(CurrentUserContext);
+    // console.log("header", x);
+    const { setCurrentUser, currentUser } = useContext(CurrentUserContext);
     const { hidden } = useContext(CartContext);
     // console.log('Header', currentUser);
     const handleSignOut = async () => {
         await auth.signOut();
-        dispatch(setCurrentUser());
+        setCurrentUser();
     };
     return (
         <HeaderContainer>

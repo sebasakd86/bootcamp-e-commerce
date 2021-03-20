@@ -8,13 +8,14 @@ import SignInAndSignUpPage from "./pages/sign-in-out/sign-in-out.component";
 import CheckoutPage from "./pages/checkout/checkout.component";
 
 import { auth, createUserProfileDocument } from "./firebase/firebase.utils";
-import { useRef, useEffect, useState } from "react";
+import { useRef, useEffect, useContext } from "react";
 
-import CurrentUserContext from "./context/currentUser/current-user.context";
-import { CollectionProvider } from "./providers/collection/collection.provider";
+import { CurrentUserContext } from "./providers/user/user.provider";
 
 function App() {
-    const [currentUser, setCurrentUser] = useState({});
+    // const x = useContext(CurrentUserContext);
+    // console.log("app.js", x);
+    const { currentUser, setCurrentUser } = useContext(CurrentUserContext);
     let unsubscribeOnUnmount = useRef(null);
     useEffect(() => {
         unsubscribeOnUnmount.current = auth.onAuthStateChanged(async (user) => {
@@ -27,20 +28,17 @@ function App() {
                     });
                 });
             } else {
-                setCurrentUser({});
+                setCurrentUser();
             }
         });
+        // eslint-disable-next-line
     }, []);
     return (
         <div>
-            <CurrentUserContext.Provider value={currentUser}>
-                <Header />
-            </CurrentUserContext.Provider>
+            <Header />
             <Switch>
                 <Route exact path='/' component={HomePage} />
-                <CollectionProvider>
-                    <Route path='/shop' component={ShopPage} />
-                </CollectionProvider>
+                <Route path='/shop' component={ShopPage} />
                 <Route exact path='/checkout' component={CheckoutPage} />
                 <Route
                     exact

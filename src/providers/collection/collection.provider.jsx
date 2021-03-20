@@ -2,8 +2,8 @@ import { createContext, useRef } from "react";
 import SHOP_DATA from "./shop.data";
 
 export const CollectionContext = createContext({
-    collections: {},
     getCollection: () => {},
+    getCollections: () => {},
 });
 
 export const CollectionProvider = ({ children }) => {

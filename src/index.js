@@ -3,24 +3,23 @@ import ReactDOM from "react-dom";
 import "./index.css";
 import App from "./App";
 //To access the upper state
-import { Provider } from "react-redux";
-import { PersistGate } from "redux-persist/integration/react";
-import { store, persistor } from "./redux/store";
 
 import { BrowserRouter } from "react-router-dom";
 import CartProvider from "./providers/cart/cart.provider";
+import { CurrentUserProvider } from "./providers/user/user.provider";
+import { CollectionProvider } from "./providers/collection/collection.provider";
 
 ReactDOM.render(
-    <Provider store={store}>
-        <CartProvider>
-            <React.StrictMode>
-                <BrowserRouter>
-                    <PersistGate loading={null} persistor={persistor}>
+    <CartProvider>
+        <CurrentUserProvider>
+            <CollectionProvider>
+                <React.StrictMode>
+                    <BrowserRouter>
                         <App />
-                    </PersistGate>
-                </BrowserRouter>
-            </React.StrictMode>
-        </CartProvider>
-    </Provider>,
+                    </BrowserRouter>
+                </React.StrictMode>
+            </CollectionProvider>
+        </CurrentUserProvider>
+    </CartProvider>,
     document.getElementById("root")
 );

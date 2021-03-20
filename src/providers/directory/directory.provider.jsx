@@ -1,7 +1,5 @@
-import { createSelector } from "reselect";
-/* -------------------------
-        constantes
-------------------------- */
+import { createContext } from "react";
+
 const INITIAL_STATE = {
     sections: [
         {
@@ -38,29 +36,19 @@ const INITIAL_STATE = {
         },
     ],
 };
-/* -------------------------
-            types
-------------------------- */
 
-/* -------------------------
-            reducer
-------------------------- */
-export default function directoryReducer(state = INITIAL_STATE, action) {
-    switch (action.type) {
-        default:
-            return state;
-    }
-}
-/* -------------------------
-            actions
-------------------------- */
+export const DirectoryContext = createContext({
+    sections: [],
+});
 
-/* -------------------------
-            selectors
-------------------------- */
-const selectDirectory = (state) => state.directory;
-
-export const selectDirectorySection = createSelector(
-    [selectDirectory],
-    directory => directory.sections
-);
+export const DirectoryProvider = ({ children }) => {
+    const sections = INITIAL_STATE.sections;
+    return (
+        <DirectoryContext.Provider
+            value={{
+                sections,
+            }}>
+            {children}
+        </DirectoryContext.Provider>
+    );
+};
