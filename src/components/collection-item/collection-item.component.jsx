@@ -1,7 +1,6 @@
 import { useDispatch } from "react-redux";
 import { addCartItem } from "../../redux/ducks/cartDucks";
 
-import CustomButton from "../custom-button/custom-button.component";
 import {
     CollectionItemContainer,
     CollectionItemImage,

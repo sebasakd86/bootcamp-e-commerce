@@ -1,7 +1,12 @@
-import "./collection-page.styles.scss";
+// import "./collection-page.styles.scss";
 import { useSelector } from "react-redux";
 import { selectCollection } from "../../redux/ducks/shopDucks";
 import CollectionItem from "../../components/collection-item/collection-item.component";
+import {
+    CollectionPageContainer,
+    CollectionPageItems,
+    CollectionPageTitle,
+} from "./collection-page.styles";
 
 const CollectionPage = ({ match }) => {
     //this fails when selector fails, doing this i catch the exception but forces a double render.
@@ -14,14 +19,14 @@ const CollectionPage = ({ match }) => {
     } catch (err) {}
 
     return (
-        <div className='collection-page'>
-            <h2 className='title'>{title}</h2>
-            <div className='items'>
+        <CollectionPageContainer>
+            <CollectionPageTitle>{title}</CollectionPageTitle>
+            <CollectionPageItems>
                 {items.map((item) => (
                     <CollectionItem key={item.id} item={item} />
                 ))}
-            </div>
-        </div>
+            </CollectionPageItems>
+        </CollectionPageContainer>
     );
 };
 
